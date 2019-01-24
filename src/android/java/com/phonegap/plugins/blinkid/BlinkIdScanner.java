@@ -34,10 +34,10 @@ import com.microblink.recognizers.blinkbarcode.usdl.USDLRecognizerSettings;
 import com.microblink.recognizers.blinkbarcode.usdl.USDLScanResult;
 import com.microblink.recognizers.blinkbarcode.zxing.ZXingRecognizerSettings;
 import com.microblink.recognizers.blinkbarcode.zxing.ZXingScanResult;
-//import com.microblink.recognizers.blinkid.malaysia.MyKadRecognitionResult;
-//import com.microblink.recognizers.blinkid.malaysia.MyKadRecognizerSettings;
-import com.microblink.recognizers.blinkid.indonesia.front.IndonesianIDFrontRecognitionResult;
-import com.microblink.recognizers.blinkid.indonesia.front.IndonesianIDFrontRecognizerSettings;
+import com.microblink.recognizers.blinkid.malaysia.MyKadRecognitionResult;
+import com.microblink.recognizers.blinkid.malaysia.MyKadRecognizerSettings;
+// import com.microblink.recognizers.blinkid.indonesia.front.IndonesianIDFrontRecognitionResult;
+// import com.microblink.recognizers.blinkid.indonesia.front.IndonesianIDFrontRecognizerSettings;
 import com.microblink.recognizers.blinkid.mrtd.MRTDRecognitionResult;
 import com.microblink.recognizers.blinkid.mrtd.MRTDRecognizerSettings;
 import com.microblink.recognizers.blinkid.eudl.EUDLCountry;
@@ -268,11 +268,9 @@ public class BlinkIdScanner extends CordovaPlugin {
             return buildDedlSettings();
         } else if (type.equals(EUDL_TYPE)) {
             return buildEudlSettings();
-        } 
-        // else if (type.equals(MYKAD_TYPE)) {
-        //     return buildMyKadSettings();
-        // } 
-        else if(type.equals(BARCODE_TYPE)) {
+        } else if (type.equals(MYKAD_TYPE)) {
+            return buildMyKadSettings();
+        } else if(type.equals(BARCODE_TYPE)) {
             return buildBarcodeSettings();
         } else if (type.equals(DOCUMENTFACE_TYPE)) {
           return buildDocumentFaceSettings();
@@ -346,14 +344,14 @@ public class BlinkIdScanner extends CordovaPlugin {
         return eudl;
     }
 
-    // private MyKadRecognizerSettings buildMyKadSettings() {
-    //     // prepare settings for Malaysian MyKad ID document recognizer
-    //     MyKadRecognizerSettings myKad = new MyKadRecognizerSettings();
-    //     if (mImageType == IMAGE_CROPPED) {
-    //         myKad.setShowFullDocument(true);
-    //     }
-    //     return myKad;
-    // }
+    private MyKadRecognizerSettings buildMyKadSettings() {
+        // prepare settings for Malaysian MyKad ID document recognizer
+        MyKadRecognizerSettings myKad = new MyKadRecognizerSettings();
+        if (mImageType == IMAGE_CROPPED) {
+            myKad.setShowFullDocument(true);
+        }
+        return myKad;
+    }
 
     private IndonesianIDFrontRecognizerSettings buildIndonesiaIdSettings() {
         IndonesianIDFrontRecognizerSettings settings = new IndonesianIDFrontRecognizerSettings();
@@ -524,16 +522,14 @@ public class BlinkIdScanner extends CordovaPlugin {
                             resultsList.put(buildUSDLResult((USDLScanResult) res));
                         } else if (res instanceof EUDLRecognitionResult) { // check if scan result is result of EUDL recognizer
                             resultsList.put(buildEUDLResult((EUDLRecognitionResult) res));
-                        } 
-                        // else if (res instanceof MyKadRecognitionResult) { // check if scan result is result of MyKad recognizer
-                        //     resultsList.put(buildMyKadResult((MyKadRecognitionResult) res));
-                        // }
-                         else if (res instanceof BarcodeScanResult) {
+                        } else if (res instanceof MyKadRecognitionResult) { // check if scan result is result of MyKad recognizer
+                            resultsList.put(buildMyKadResult((MyKadRecognitionResult) res));
+                        } else if (res instanceof BarcodeScanResult) {
                             resultsList.put(buildBarcodeResult((BarcodeScanResult) res));
                         } else if (res instanceof DocumentFaceRecognitionResult) {
                             resultsList.put(buildDocumentFaceResult((DocumentFaceRecognitionResult) res));
                         }else if (res instanceof IndonesianIDFrontRecognitionResult) {
-                            resultList.put(buildIndonesiaIdResult((IndonesianIDFrontRecognitionResult) res));
+                            jsonResult = buildIndonesiaIdResult((IndonesianIDFrontRecognitionResult) res);
                         }
                     } catch (Exception e) {
                         Log.e(LOG_TAG, "Error parsing " + res.getClass().getName());
@@ -645,12 +641,13 @@ public class BlinkIdScanner extends CordovaPlugin {
         return buildKeyValueResult(res, USDL_RESULT_TYPE);
     }
 
-    // private JSONObject buildMyKadResult(MyKadRecognitionResult res) throws JSONException {
-    //    return buildKeyValueResult(res, MYKAD_RESULT_TYPE);
-    // }
+    private JSONObject buildMyKadResult(MyKadRecognitionResult res) throws JSONException {
+       return buildKeyValueResult(res, MYKAD_RESULT_TYPE);
+    }
 
     private JSONObject buildIndonesiaIdResult(IndonesianIDFrontRecognitionResult res) throws JSONException {
-         return buildKeyValueResult(res, RecognizerType.INDONESIA_ID.resultId);
+        JSONObject result = buildKeyValueResult(res, RecognizerType.INDONESIA_ID.resultId);
+        return result;
     }
     
     private JSONObject buildEUDLResult(EUDLRecognitionResult res) throws JSONException{
