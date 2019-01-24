@@ -197,7 +197,7 @@ public class BlinkIdScanner extends CordovaPlugin {
         FakeR fakeR = new FakeR(this.cordova.getActivity());
 
         if(language != null){
-            LanguageUtils.setLanguageAndCountry(language,"",context)
+            LanguageUtils.setLanguageAndCountry(language,"",context);
         }
 
         Intent intent = new Intent(context, ScanCard.class);
