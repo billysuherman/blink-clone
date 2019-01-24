@@ -641,9 +641,9 @@ public class BlinkIdScanner extends CordovaPlugin {
         return buildKeyValueResult(res, USDL_RESULT_TYPE);
     }
 
-    private JSONObject buildMyKadResult(MyKadRecognitionResult res) throws JSONException {
-       return buildKeyValueResult(res, MYKAD_RESULT_TYPE);
-    }
+    // private JSONObject buildMyKadResult(MyKadRecognitionResult res) throws JSONException {
+    //    return buildKeyValueResult(res, MYKAD_RESULT_TYPE);
+    // }
 
     private JSONObject buildIndonesiaIdResult(IndonesianIDFrontRecognitionResult res) throws JSONException {
         JSONObject result = buildKeyValueResult(res, RecognizerType.INDONESIA_ID.resultId);
