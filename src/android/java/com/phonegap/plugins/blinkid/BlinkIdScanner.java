@@ -274,9 +274,10 @@ public class BlinkIdScanner extends CordovaPlugin {
             return buildBarcodeSettings();
         } else if (type.equals(DOCUMENTFACE_TYPE)) {
           return buildDocumentFaceSettings();
-        } else if(type.equals(INDONESIA_ID_TYPE)){
-            return buildIndonesiaIdSettings();
-        }
+        } 
+        // else if(type.equals(INDONESIA_ID_TYPE)){
+        //     return buildIndonesiaIdSettings();
+        // }
         throw new IllegalArgumentException("Recognizer type not supported: " + type);
     }
 
@@ -353,10 +354,10 @@ public class BlinkIdScanner extends CordovaPlugin {
         return myKad;
     }
 
-    private IndonesianIDFrontRecognizerSettings buildIndonesiaIdSettings() {
-        IndonesianIDFrontRecognizerSettings settings = new IndonesianIDFrontRecognizerSettings();
-        return settings;
-    }
+    // private IndonesianIDFrontRecognizerSettings buildIndonesiaIdSettings() {
+    //     IndonesianIDFrontRecognizerSettings settings = new IndonesianIDFrontRecognizerSettings();
+    //     return settings;
+    // }
 
     private USDLRecognizerSettings buildUsdlSettings() {
         // prepare settings for US Driver's Licence recognizer
@@ -528,9 +529,10 @@ public class BlinkIdScanner extends CordovaPlugin {
                             resultsList.put(buildBarcodeResult((BarcodeScanResult) res));
                         } else if (res instanceof DocumentFaceRecognitionResult) {
                             resultsList.put(buildDocumentFaceResult((DocumentFaceRecognitionResult) res));
-                        }else if (res instanceof IndonesianIDFrontRecognitionResult) {
-                            jsonResult = buildIndonesiaIdResult((IndonesianIDFrontRecognitionResult) res);
                         }
+                        // else if (res instanceof IndonesianIDFrontRecognitionResult) {
+                        //     jsonResult = buildIndonesiaIdResult((IndonesianIDFrontRecognitionResult) res);
+                        // }
                     } catch (Exception e) {
                         Log.e(LOG_TAG, "Error parsing " + res.getClass().getName());
                     }
@@ -645,10 +647,10 @@ public class BlinkIdScanner extends CordovaPlugin {
        return buildKeyValueResult(res, MYKAD_RESULT_TYPE);
     }
 
-    private JSONObject buildIndonesiaIdResult(IndonesianIDFrontRecognitionResult res) throws JSONException {
-        JSONObject result = buildKeyValueResult(res, RecognizerType.INDONESIA_ID.resultId);
-        return result;
-    }
+    // private JSONObject buildIndonesiaIdResult(IndonesianIDFrontRecognitionResult res) throws JSONException {
+    //     JSONObject result = buildKeyValueResult(res, RecognizerType.INDONESIA_ID.resultId);
+    //     return result;
+    // }
     
     private JSONObject buildEUDLResult(EUDLRecognitionResult res) throws JSONException{
       String resultType;
