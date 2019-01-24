@@ -268,9 +268,11 @@ public class BlinkIdScanner extends CordovaPlugin {
             return buildDedlSettings();
         } else if (type.equals(EUDL_TYPE)) {
             return buildEudlSettings();
-        } else if (type.equals(MYKAD_TYPE)) {
-            return buildMyKadSettings();
-        } else if(type.equals(BARCODE_TYPE)) {
+        } 
+        // else if (type.equals(MYKAD_TYPE)) {
+        //     return buildMyKadSettings();
+        // } 
+        else if(type.equals(BARCODE_TYPE)) {
             return buildBarcodeSettings();
         } else if (type.equals(DOCUMENTFACE_TYPE)) {
           return buildDocumentFaceSettings();
@@ -522,9 +524,11 @@ public class BlinkIdScanner extends CordovaPlugin {
                             resultsList.put(buildUSDLResult((USDLScanResult) res));
                         } else if (res instanceof EUDLRecognitionResult) { // check if scan result is result of EUDL recognizer
                             resultsList.put(buildEUDLResult((EUDLRecognitionResult) res));
-                        } else if (res instanceof MyKadRecognitionResult) { // check if scan result is result of MyKad recognizer
-                            resultsList.put(buildMyKadResult((MyKadRecognitionResult) res));
-                        } else if (res instanceof BarcodeScanResult) {
+                        } 
+                        // else if (res instanceof MyKadRecognitionResult) { // check if scan result is result of MyKad recognizer
+                        //     resultsList.put(buildMyKadResult((MyKadRecognitionResult) res));
+                        // }
+                         else if (res instanceof BarcodeScanResult) {
                             resultsList.put(buildBarcodeResult((BarcodeScanResult) res));
                         } else if (res instanceof DocumentFaceRecognitionResult) {
                             resultsList.put(buildDocumentFaceResult((DocumentFaceRecognitionResult) res));
