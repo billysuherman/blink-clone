@@ -80,7 +80,7 @@ public class BlinkIdScanner extends CordovaPlugin {
     private static final String MYKAD_TYPE = "MyKad";
     private static final String BARCODE_TYPE = "Barcode";
     private static final String DOCUMENTFACE_TYPE = "DocumentFace";
-    private static final String INDONESIA_ID_TYPE = "IndonesiaId"
+    private static final String INDONESIA_ID_TYPE = "IndonesiaId";
 
     // keys for result types
     private static final String PDF417_RESULT_TYPE = "Barcode result";
@@ -94,7 +94,7 @@ public class BlinkIdScanner extends CordovaPlugin {
     private static final String MYKAD_RESULT_TYPE = "MyKad result";
     private static final String BARCODE_RESULT_TYPE = "Barcode result";
     private static final String DOCUMENTFACE_RESULT_TYPE = "DocumentFace result";
-    private static final String INDONESIA_ID_RESULT_TYPE = "IndonesiaID result"
+    private static final String INDONESIA_ID_RESULT_TYPE = "IndonesiaID result";
 
     private static final String SCAN = "scan";
     private static final String CANCELLED = "cancelled";
@@ -275,7 +275,7 @@ public class BlinkIdScanner extends CordovaPlugin {
         } else if (type.equals(DOCUMENTFACE_TYPE)) {
           return buildDocumentFaceSettings();
         } else if(type.equals(INDONESIA_ID_TYPE)){
-            return 
+            return buildIndonesiaIdSettings();
         }
         throw new IllegalArgumentException("Recognizer type not supported: " + type);
     }
