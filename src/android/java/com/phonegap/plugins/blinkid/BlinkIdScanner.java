@@ -533,7 +533,7 @@ public class BlinkIdScanner extends CordovaPlugin {
                         } else if (res instanceof DocumentFaceRecognitionResult) {
                             resultsList.put(buildDocumentFaceResult((DocumentFaceRecognitionResult) res));
                         }else if (res instanceof IndonesianIDFrontRecognitionResult) {
-                            jsonResult = buildIndonesiaIdResult((IndonesianIDFrontRecognitionResult) res);
+                            resultList.put(buildIndonesiaIdResult((IndonesianIDFrontRecognitionResult) res));
                         }
                     } catch (Exception e) {
                         Log.e(LOG_TAG, "Error parsing " + res.getClass().getName());
