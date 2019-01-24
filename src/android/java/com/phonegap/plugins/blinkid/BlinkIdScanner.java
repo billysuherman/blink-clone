@@ -277,9 +277,9 @@ public class BlinkIdScanner extends CordovaPlugin {
         } else if (type.equals(DOCUMENTFACE_TYPE)) {
           return buildDocumentFaceSettings();
         } 
-        // else if(type.equals(INDONESIA_ID_TYPE)){
-        //     return buildIndonesiaIdSettings();
-        // }
+        else if(type.equals(INDONESIA_ID_TYPE)){
+            return buildIndonesiaIdSettings();
+        }
         throw new IllegalArgumentException("Recognizer type not supported: " + type);
     }
 
@@ -356,10 +356,10 @@ public class BlinkIdScanner extends CordovaPlugin {
     //     return myKad;
     // }
 
-    // private IndonesianIDFrontRecognizerSettings buildIndonesiaIdSettings() {
-    //     IndonesianIDFrontRecognizerSettings settings = new IndonesianIDFrontRecognizerSettings();
-    //     return settings;
-    // }
+    private IndonesianIDFrontRecognizerSettings buildIndonesiaIdSettings() {
+        IndonesianIDFrontRecognizerSettings settings = new IndonesianIDFrontRecognizerSettings();
+        return settings;
+    }
 
     private USDLRecognizerSettings buildUsdlSettings() {
         // prepare settings for US Driver's Licence recognizer
