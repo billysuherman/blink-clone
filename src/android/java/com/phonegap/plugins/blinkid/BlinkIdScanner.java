@@ -19,6 +19,7 @@ import com.microblink.activity.ScanCard;
 import com.microblink.image.Image;
 import com.microblink.image.ImageListener;
 import com.microblink.image.ImageType;
+import com.microblink.locale.LanguageUtils;
 import com.microblink.metadata.MetadataSettings;
 import com.microblink.recognizers.BaseRecognitionResult;
 import com.microblink.recognizers.IResultHolder;
@@ -173,7 +174,13 @@ public class BlinkIdScanner extends CordovaPlugin {
             if (!args.isNull(3)) {
                 licenseKey = args.optString(3);
             }
-            scan(types, licenseKey);
+            
+             String language = null;
+            if (!args.isNull(4)) {
+                language = args.optString(4);
+            }
+
+            scan(types, licenseKey,language);
         } else {
             return false;
         }
@@ -184,10 +191,14 @@ public class BlinkIdScanner extends CordovaPlugin {
     /**
      * Starts an intent from provided class to scan and return result.
      */
-    public void scan(Set<String> types, String license) {
+    public void scan(Set<String> types, String license, String language) {
 
         Context context = this.cordova.getActivity().getApplicationContext();
         FakeR fakeR = new FakeR(this.cordova.getActivity());
+
+        if(language != null){
+            LanguageUtils.setLanguageAndCountry(language,"",context)
+        }
 
         Intent intent = new Intent(context, ScanCard.class);
 
