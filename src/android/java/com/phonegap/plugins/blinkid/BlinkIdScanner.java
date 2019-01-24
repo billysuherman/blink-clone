@@ -344,14 +344,14 @@ public class BlinkIdScanner extends CordovaPlugin {
         return eudl;
     }
 
-    private MyKadRecognizerSettings buildMyKadSettings() {
-        // prepare settings for Malaysian MyKad ID document recognizer
-        MyKadRecognizerSettings myKad = new MyKadRecognizerSettings();
-        if (mImageType == IMAGE_CROPPED) {
-            myKad.setShowFullDocument(true);
-        }
-        return myKad;
-    }
+    // private MyKadRecognizerSettings buildMyKadSettings() {
+    //     // prepare settings for Malaysian MyKad ID document recognizer
+    //     MyKadRecognizerSettings myKad = new MyKadRecognizerSettings();
+    //     if (mImageType == IMAGE_CROPPED) {
+    //         myKad.setShowFullDocument(true);
+    //     }
+    //     return myKad;
+    // }
 
     private IndonesianIDFrontRecognizerSettings buildIndonesiaIdSettings() {
         IndonesianIDFrontRecognizerSettings settings = new IndonesianIDFrontRecognizerSettings();
