@@ -64,35 +64,5 @@
         
         <hook type="after_prepare" src="scripts/fix-largeheap.js" />
     </platform>
-
-    <platform name="ios">
-        <source-file src="src/ios/sources/CDVblinkIdScanner.m" />
-        <header-file src="src/ios/sources/CDVblinkIdScanner.h" />
-        
-        <framework src="libc++.dylib" />
-        <framework src="libz.dylib" />
-        <framework src="libiconv.dylib" />
-
-        <framework src="CoreVideo.framework" />
-        <framework src="CoreText.framework" />
-        <framework src="CoreMedia.framework" />
-        <framework src="QuartzCore.framework" />
-        <framework src="AudioToolbox.framework" />
-        <framework src="OpenGLES.framework" />
-        <framework src="Accelerate.framework" />
-        <framework src="src/ios/blinkid-ios/MicroBlink.framework" custom="true" embed="true"/>
-        
-        <preference name="CAMERA_USAGE_DESCRIPTION" default=" " />
-        <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
-            <string>$CAMERA_USAGE_DESCRIPTION</string>
-        </config-file>
-        
-        <resource-file src="src/ios/blinkid-ios/MicroBlink.bundle" />
-        <config-file target="config.xml" parent="/*">
-            <feature name="blinkIdScanner">
-                <param name="ios-package" value="CDVblinkIdScanner" />
-            </feature>
-        </config-file>
-    </platform>
     
 </plugin>
