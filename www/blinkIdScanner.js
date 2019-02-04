@@ -4518,7 +4518,8 @@ BlinkID.prototype.Quadrilateral = Quadrilateral;
 // BlinkID.prototype.IkadRecognizer = IkadRecognizer;
 
 // /**
-// * Result object for IndonesiaIdFrontRecognizer.
+//  * Result object for IndonesiaIdFrontRecognizer.
+//  */
 function IndonesiaIdFrontRecognizerResult(nativeResult) {
     RecognizerResult.call(this, nativeResult.resultState);
     
