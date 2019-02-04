@@ -61,11 +61,12 @@
         <source-file src="src/android/java/com/phonegap/plugins/microblink/overlays/OverlaySettingsSerializers.java" target-dir="app/src/main/java/com/phonegap/plugins/microblink/overlays" />
         <source-file src="src/android/java/com/phonegap/plugins/microblink/overlays/serialization/DocumentVerificationOverlaySettingsSerialization.java" target-dir="app/src/main/java/com/phonegap/plugins/microblink/overlays/serialization" />
         <source-file src="src/android/java/com/phonegap/plugins/microblink/overlays/serialization/DocumentOverlaySettingsSerialization.java" target-dir="app/src/main/java/com/phonegap/plugins/microblink/overlays/serialization" />
+         <source-file src="src/android/java/com/phonegap/plugins/microblink/overlays/serialization/BarcodeOverlaySettingsSerialization.java" target-dir="app/src/main/java/com/phonegap/plugins/microblink/overlays/serialization" />
         <source-file src="src/android/java/com/phonegap/plugins/microblink/recognizers/RecognizerSerializers.java" target-dir="app/src/main/java/com/phonegap/plugins/microblink/recognizers" />
         <source-file src="src/android/java/com/phonegap/plugins/microblink/recognizers/RecognizerSerialization.java" target-dir="app/src/main/java/com/phonegap/plugins/microblink/recognizers" />
         <source-file src="src/android/java/com/phonegap/plugins/microblink/recognizers/serialization/SerializationUtils.java" target-dir="app/src/main/java/com/phonegap/plugins/microblink/recognizers/serialization" />
         <source-file src="src/android/java/com/phonegap/plugins/microblink/recognizers/serialization/IndonesiaIdFrontRecognizerSerialization.java" target-dir="app/src/main/java/com/phonegap/plugins/microblink/recognizers/serialization" />
-
+        <source-file src="src/android/java/com/phonegap/plugins/microblink/recognizers/serialization/BarcodeRecognizerSerialization.java" target-dir="app/src/main/java/com/phonegap/plugins/microblink/recognizers/serialization" />
         
         <source-file src="src/android/res/raw/beep.mp3" target-dir="res/raw" />
         <source-file src="src/android/res/layout/splash_screen.xml" target-dir="res/layout" />
@@ -73,6 +74,58 @@
         <framework src="src/android/libBlinkID.gradle" custom="true" type="gradleReference" />
         
         <hook type="after_prepare" src="scripts/fix-largeheap.js" />
+    </platform>
+
+    <platform name="ios">
+        <source-file src="src/ios/sources/MBBlinkIDSerializationUtils.m" />
+        <source-file src="src/ios/sources/CDVMicroblinkScanner.m" />
+        <source-file src="src/ios/sources/MBSerializationUtils.m" />
+        <header-file src="src/ios/sources/MBBlinkIDSerializationUtils.h" />
+        <header-file src="src/ios/sources/CDVMicroblinkScanner.h" />
+        <header-file src="src/ios/sources/MBSerializationUtils.h" />
+        <header-file src="src/ios/sources/Overlays/MBOverlayVCCreator.h" />
+        <source-file src="src/ios/sources/Overlays/MBOverlaySettingsSerializers.m" />
+        <header-file src="src/ios/sources/Overlays/MBOverlayViewControllerDelegate.h" />
+        <header-file src="src/ios/sources/Overlays/MBOverlaySettingsSerializers.h" />
+        <header-file src="src/ios/sources/Overlays/Serialization/MBDocumentOverlaySettingsSerialization.h" />
+        <header-file src="src/ios/sources/Overlays/Serialization/MBBarcodeOverlaySettingsSerialization.h" />
+        <source-file src="src/ios/sources/Overlays/Serialization/MBDocumentVerificationOverlaySettingsSerialization.m" />
+        <source-file src="src/ios/sources/Overlays/Serialization/MBDocumentOverlaySettingsSerialization.m" />
+        <header-file src="src/ios/sources/Overlays/Serialization/MBDocumentVerificationOverlaySettingsSerialization.h" />
+        <source-file src="src/ios/sources/Overlays/Serialization/MBBarcodeOverlaySettingsSerialization.m" />
+        <header-file src="src/ios/sources/Recognizers/MBRecognizerWrapper.h" />
+        <header-file src="src/ios/sources/Recognizers/MBRecognizerSerializers.h" />
+        <source-file src="src/ios/sources/Recognizers/MBRecognizerWrapper.m" />
+        <source-file src="src/ios/sources/Recognizers/MBRecognizerSerializers.m" />
+         <source-file src="src/ios/sources/Recognizers/Wrappers/MBIndonesiaIdFrontRecognizerWrapper.m" />
+
+          <framework src="libc++.dylib" />
+        <framework src="libz.dylib" />
+        <framework src="libiconv.dylib" />
+
+        <framework src="CoreVideo.framework" />
+        <framework src="CoreText.framework" />
+        <framework src="CoreMedia.framework" />
+        <framework src="QuartzCore.framework" />
+        <framework src="AudioToolbox.framework" />
+        <framework src="OpenGLES.framework" />
+        <framework src="Accelerate.framework" />
+        <framework src="src/ios/MicroBlink.framework" custom="true" embed="true"/>
+        
+        <preference name="CAMERA_USAGE_DESCRIPTION" default=" " />
+        <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>$CAMERA_USAGE_DESCRIPTION</string>
+        </config-file>
+        
+        <resource-file src="src/ios/MicroBlink.bundle" />
+        <config-file target="config.xml" parent="/*">
+            <feature name="BlinkIDScanner">
+                <param name="ios-package" value="CDVMicroblinkScanner" />
+            </feature>
+        </config-file>
+        
+        <hook type="before_platform_add" src="scripts/initIOSFramework.sh"/>
+        <hook type="after_platform_add" src="scripts/addEmbedded.js" />
     </platform>
     
 </plugin>
