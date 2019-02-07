@@ -18,7 +18,7 @@ import android.util.Log;
 import com.microblink.activity.ScanCard;
 import com.microblink.image.Image;
 import com.microblink.image.ImageListener;
-import com.microblink.image.ImageType;
+//import com.microblink.image.ImageType;
 import com.microblink.locale.LanguageUtils;
 import com.microblink.metadata.MetadataSettings;
 import com.microblink.recognizers.BaseRecognitionResult;
@@ -97,11 +97,16 @@ public class BlinkIdScanner extends CordovaPlugin {
     private static final String DOCUMENTFACE_RESULT_TYPE = "DocumentFace result";
     private static final String INDONESIA_ID_RESULT_TYPE = "IndonesiaID result";
 
+    private static final String FULL_DOCUMENT_DETECTOR_IMAGE_ID1 = "IDCard";
+    private static final String FULL_DOCUMENT_DETECTOR_IMAGE_ID2 = "ID2Card";
+
     private static final String SCAN = "scan";
     private static final String CANCELLED = "cancelled";
 
     private static final String RESULT_LIST = "resultList";
-    private static final String RESULT_IMAGE = "resultImage";
+    private static final String RESULT_SUCCESSFUL_IMAGE = "resultSuccessfulImage";
+    private static final String RESULT_DOCUMENT_IMAGE = "resultDocumentImage";
+    private static final String RESULT_FACE_IMAGE = "resultFaceImage";
     private static final String RESULT_TYPE = "resultType";
     private static final String TYPE = "type";
     private static final String DATA = "data";
@@ -111,16 +116,23 @@ public class BlinkIdScanner extends CordovaPlugin {
     private static final int COMPRESSED_IMAGE_QUALITY = 90;
 
     private static final String IMAGE_SUCCESSFUL_SCAN_STR = "IMAGE_SUCCESSFUL_SCAN";
-    private static final String IMAGE_CROPPED_STR = "IMAGE_CROPPED";
+    private static final String IMAGE_DOCUMENT_STR = "IMAGE_DOCUMENT";
+    private static final String IMAGE_FACE_STR = "IMAGE_FACE";
 
-    private static final int IMAGE_NONE = 0;
-    private static final int IMAGE_SUCCESSFUL_SCAN = 1;
-    private static final int IMAGE_CROPPED = 2;
 
     private static final String LOG_TAG = "BlinkIdScanner";
 
-    private int mImageType = IMAGE_NONE;
-    private CallbackContext callbackContext;
+    private static boolean sReturnSuccessfulImage;
+    private static boolean sReturnDocumentImage;
+    private static boolean sReturnFaceImage;
+
+    private static CallbackContext sCallbackContext;
+
+    private static Map<String, Class<? extends BaseRecognitionResult>>
+            sFullDocumentImageResultTypes = new HashMap<String, Class<? extends BaseRecognitionResult>>();
+
+    private static Map<String, Class<? extends BaseRecognitionResult>>
+            sFaceImageResultTypes = new HashMap<String, Class<? extends BaseRecognitionResult>>();
 
     /**
      * Constructor.
@@ -161,11 +173,15 @@ public class BlinkIdScanner extends CordovaPlugin {
                 types.add(typesArg.optString(i));
             }
 
-            String imageTypeStr = args.optString(1);
-            if (imageTypeStr.equals(IMAGE_CROPPED_STR)) {
-                mImageType = IMAGE_CROPPED;
-            } else if (imageTypeStr.equals(IMAGE_SUCCESSFUL_SCAN_STR)) {
-                mImageType = IMAGE_SUCCESSFUL_SCAN;
+            JSONArray imageTypes = args.optJSONArray(1);
+            for (int i = 0; i < imageTypes.length(); ++i) {
+                if (imageTypes.optString(i).equals(IMAGE_SUCCESSFUL_SCAN_STR)) {
+                    sReturnSuccessfulImage = true;
+                } else if (imageTypes.optString(i).equals(IMAGE_DOCUMENT_STR)) {
+                    sReturnDocumentImage = true;
+                } else if (imageTypes.optString(i).equals(IMAGE_FACE_STR)) {
+                    sReturnFaceImage = true;
+                }
             }
 
             // ios license key is at index 2 in args
@@ -208,12 +224,14 @@ public class BlinkIdScanner extends CordovaPlugin {
             intent.putExtra(ScanCard.EXTRAS_LICENSE_KEY, license);
         }
 
+        sFullDocumentImageResultTypes.clear();
+        sFaceImageResultTypes.clear();
         List<RecognizerSettings> recSett = new ArrayList<RecognizerSettings>();
         for (String type : types) {
             try {
                 recSett.add(buildRecognizerSettings(type));
             } catch (IllegalArgumentException ex) {
-                this.callbackContext.error(ex.getMessage());
+                sCallbackContext.error(ex.getMessage());
                 return;
             }
         }
