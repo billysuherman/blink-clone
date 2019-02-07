@@ -165,7 +165,7 @@ public class BlinkIdScanner extends CordovaPlugin {
      */
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
-        this.callbackContext = callbackContext;
+        sCallbackContext = callbackContext;
 
         if (action.equals(SCAN)) {
             Set<String> types = new HashSet<String>();
@@ -611,10 +611,10 @@ public class BlinkIdScanner extends CordovaPlugin {
                 } catch (JSONException e) {
                     Log.e(LOG_TAG, "This should never happen");
                 }
-                this.callbackContext.success(obj);
+                sCallbackContext.success(obj);
 
             } else {
-                this.callbackContext.error("Unexpected error");
+                 sCallbackContext.error("Unexpected error");
             }
             ImageHolder.getInstance().clear();
         }
