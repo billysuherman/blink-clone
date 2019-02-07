@@ -272,7 +272,7 @@ public class BlinkIdScanner extends CordovaPlugin {
         intent.putExtra(ScanCard.EXTRAS_IMAGE_METADATA_SETTINGS, ims);
 
         // pass image listener to scan activity
-        intent.putExtra(ScanCard.EXTRAS_IMAGE_LISTENER, new ScanImageListener(mImageType));
+        intent.putExtra(ScanCard.EXTRAS_IMAGE_LISTENER, new ScanImageListener());
 
         // If you want sound to be played after the scanning process ends,
         // put here the resource ID of your sound file. (optional)
