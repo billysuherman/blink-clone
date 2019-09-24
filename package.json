@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BlinkID/blinkid-phonegap.git"
+    "url": "git+https://github.com/OutSystems/Cordova-Plugin-Micro-Blink-ID.git"
   },
   "keywords": [
     "ID",
