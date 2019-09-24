@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-           id="com.os.mobile.blinkid"
+           id="com.microblink.BlinkIdScanner"
       version="0.0.3">
     <name>Blink Id Plugin</name>
     <description>Plugin Read Card ID and to Scan Documents</description>
@@ -9,10 +9,9 @@
     <keywords>cordova,outsystems, blinkid, microblink, cardID</keywords>
     <repo></repo>
     <issue></issue>
-
-    <js-module src="www/BlinkId.js" name="BlinkId">
-        <clobbers target="cordova.plugins.blinkId" />
-        <clobbers target="plugin.blinkId" />
+ 
+    <js-module src="www/blinkIdScanner.js" name="BlinkIdScanner">
+        <clobbers target="cordova.plugins.blinkIdScanner" />
     </js-module>
 
     <!-- ios -->
@@ -57,12 +56,40 @@
     
     <!-- Android -->
     <platform name="android">
-        
-        <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="BlinkIdPlugin">
-                <param name="android-package" value="com.phonegap.plugins.blinkid.BlinkIdScanner"/>
+              
+      <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="BlinkIdScanner">
+                <param name="android-package" value="com.phonegap.plugins.blinkid.BlinkIdScanner" />
             </feature>
-        </config-file><source-file src="src/android/java/com/phonegap/plugins/blinkid/BlinkIdScanner.java" target-dir="src/com/phonegap/plugins/blinkid" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.FLASHLIGHT" />
+            
+            <uses-feature android:name="android.hardware.camera" />
+            <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+            <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
+
+            <supports-screens
+                android:anyDensity="true"
+                android:largeScreens="true"
+                android:normalScreens="true"
+                android:resizeable="true"
+                android:smallScreens="true" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity
+                    android:name="com.microblink.activity.ScanCard"
+                    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                    android:configChanges="orientation|screenSize"
+                    android:screenOrientation="portrait" >
+            </activity>
+        </config-file>
+
+               
+        <source-file src="src/android/java/com/phonegap/plugins/blinkid/BlinkIdScanner.java" target-dir="src/com/phonegap/plugins/blinkid" />
         <source-file src="src/android/java/com/phonegap/plugins/blinkid/FakeR.java" target-dir="src/com/phonegap/plugins/blinkid" />
         
         <source-file src="src/android/res/raw/beep.mp3" target-dir="res/raw" />
